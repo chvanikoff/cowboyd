@@ -68,5 +68,3 @@ case $CMD in
 		echo "Command not supported"
 		exit 1
 esac
-
-
