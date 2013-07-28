@@ -31,6 +31,19 @@ cowboyd routes-update appname
 
 Of cause you can run multiple instances of CowboyD - multiple instances of Erlang VM will be launched (probably this part will be changed and there will be pool of running apps inside one VM).
 
+## Installation
+
+```bash
+# cd somewhere you'd like to download the project to
+cd ~/github_projects
+# Clone the repo
+git clone https://github.com/chvanikoff/cowboyd
+# Give execution rights to cowboyd if there is no
+chmod +x cowboyd/cowboyd
+# Link Cowboyd to somew executable directory in your $PATH, for example /usr/bin
+sudo ln -s cowboyd/cowboyd /usr/bin/cowboyd
+```
+
 ## Usage:
 
 After you've created webapp ([example](https://github.com/chvanikoff/cowboyd/tree/master/examples/webapp)) you can start/stop CowboyD and update routes for currently running applications:
