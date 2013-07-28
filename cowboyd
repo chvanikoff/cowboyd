@@ -1,0 +1,64 @@
+#!/usr/bin/env bash
+
+CMD=$1
+APP=$2
+APPPATH=$3
+PORT=$4
+NBA=$5
+
+if [ -z "$NBA" ] ; then
+	NBA=10 ;
+fi ;
+
+if [ -L $0 ] ; then
+    ROOTDIR=$(dirname $(readlink $0)) ;
+else
+    ROOTDIR=$(dirname $0) ;
+fi ;
+
+erleval()
+{
+	erl \
+		-name stop_$APP@127.0.0.1 \
+		-setcookie $APP \
+		-eval "$1" \
+		-s init stop \
+		> /dev/null
+}
+
+case $CMD in
+	start)
+		echo "Starting $APP..."
+		erl \
+			-pa $ROOTDIR/ebin $ROOTDIR/deps/*/ebin \
+			-s cowboyd \
+			-cowboyd path \"$APPPATH\" \
+			-cowboyd app \"$APP\" \
+			-cowboyd port \"$PORT\" \
+			-cowboyd nba \"$NBA\" \
+			-cowboyd rootdir \"$ROOTDIR\" \
+			-name $APP@127.0.0.1 \
+			+K true \
+			+A 64 \
+			-setcookie $APP \
+			-smp enable \
+			-env ERL_CRASH_DUMP ./log/erl_crash.dump \
+			-detached
+		echo "Done"
+		;;
+	stop)
+		echo "Stopping $APP..."
+		erleval "rpc:call('$APP@127.0.0.1', init, stop, [])."
+		echo "Done"
+		;;
+	routes-update)
+		echo "Updating routes for \"$APP\"..."
+		erleval "rpc:call('$APP@127.0.0.1', cowboyd, update_routes, [])."
+		echo "Done"
+		;;
+	*)
+		echo "Command not supported"
+		exit 1
+esac
+
+
