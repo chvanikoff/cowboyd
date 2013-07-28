@@ -1,0 +1,13 @@
+{application, webapp2, [
+	{description, ""},
+	{vsn, "1"},
+	{registered, []},
+	{applications, [
+		kernel,
+		stdlib,
+		inets,
+		ssl
+	]},
+	{mod, {webapp2, []}},
+	{env, []}
+]}.
