@@ -1,4 +1,5 @@
 -module(h_notfound).
+-author('chvanikoff <chvanikoff@gmail.com>').
 
 -behaviour(cowboy_http_handler).
 -export([init/3, handle/2, terminate/3]).
