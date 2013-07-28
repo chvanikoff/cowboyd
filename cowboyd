@@ -56,6 +56,14 @@ case $CMD in
 		erleval "rpc:call('$APP@127.0.0.1', cowboyd, update_routes, [])."
 		echo "Done"
 		;;
+	shell)
+		echo "Starting shell for \"$APP\""
+		erl \
+			-name shell_$APP@127.0.0.1 \
+			-setcookie $APP \
+			-remsh $APP@127.0.0.1
+		echo "\"$APP\" shell closed"
+		;;
 	*)
 		echo "Command not supported"
 		exit 1
