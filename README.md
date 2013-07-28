@@ -49,9 +49,14 @@ sudo ln -s cowboyd/cowboyd /usr/bin/cowboyd
 After you've created webapp ([example](https://github.com/chvanikoff/cowboyd/tree/master/examples/webapp)) you can start/stop CowboyD and update routes for currently running applications:
 
 ```bash
+# start application
 cowboyd start <appname> <path> <port> [<nba>]
+# stop application
 cowboyd stop <appname>
+# update application routes
 cowboyd routes-update <appname>
+# start Erlang shell for the application
+cowboyd shell <appname>
 ```
 **appname**: *string*, is the name of your application
 
